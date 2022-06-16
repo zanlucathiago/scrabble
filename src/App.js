@@ -1,24 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import { Container } from '@mui/material';
+// import { Container, Typography } from '@mui/material';
+import Panel from './components/Panel';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container style={{ textAlign: 'center' }}>
+    {/* <Container style={{ textAlign: 'center', padding: '24px' }}> */}
+      {/* <Typography color="#e8eaed" variant="h4" component="div" gutterBottom>
+        Turno do Thiago
+      </Typography> */}
+      <Panel />
+    </Container>
   );
 }
 
