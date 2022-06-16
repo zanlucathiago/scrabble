@@ -77,10 +77,4 @@ export default function Word({ onBlur, onValidate }) {
       </CardContent>
     </Card>
   );
-
-  // function getSum(wordMultiplier, letterList) {
-  //   return wordMultiplier * letterList.length === 1
-  //     ? 0
-  //     : letterList.reduce((total, letter) => total + letter.total, 0);
-  // }
 }

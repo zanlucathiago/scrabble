@@ -27,6 +27,7 @@ const rawPlayers = [
 const randomize = (array) => (Math.random() < 0.5 ? array : array.reverse());
 
 export default function Panel() {
+  const [disableFinish, setDisableFinish] = useState(false);
   const [validated, setValidated] = useState(0);
   const [players, setPlayers] = useState([]);
   const [totalScore, setTotalScore] = useState(0);
@@ -51,7 +52,8 @@ export default function Panel() {
     setValidated(0);
   };
 
-  const handleBlur = (total, validated) => {
+  const handleBlur = (disableFinish, total, validated) => {
+    setDisableFinish(disableFinish);
     setTotalScore(total);
     setValidated(validated);
   };
@@ -110,11 +112,14 @@ export default function Panel() {
             value={totalScore}
             InputProps={{
               readOnly: true,
-              // style: { width: '108px' },
             }}
           />
-          {/* <Box sx={{ flex: '1 1 auto' }} /> */}
-          <Button variant="contained" onClick={switchPlayer} color="success">
+          <Button
+            disabled={disableFinish}
+            variant="contained"
+            onClick={switchPlayer}
+            color="success"
+          >
             Terminar
           </Button>
         </Stack>

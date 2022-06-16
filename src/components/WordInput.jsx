@@ -2,11 +2,11 @@ import { TextField } from '@mui/material';
 import { useState } from 'react';
 
 export default function WordInput({ onBlur }) {
-  const [focused, setFocused] = useState(false);
+  const [error, setError] = useState(false);
   const [value, setValue] = useState('');
 
   const handleChange = (event) => {
-    setFocused(true);
+    setError(false);
     const { value } = event.target;
     if (value.length < 16) {
       setValue(value.replace(/[^a-zçA-ZÇ]+/g, '').toUpperCase());
@@ -14,14 +14,15 @@ export default function WordInput({ onBlur }) {
   };
 
   const handleBlur = () => {
-    setFocused(false);
+    setError(value.length === 1);
     onBlur(value);
   };
 
   return (
     <TextField
       color="success"
-      error={!focused && value.length === 1}
+      error={error}
+      helperText={error && 'Palavra muito pequena'}
       size="small"
       label="Palavra"
       InputProps={{ style: { width: '217px' } }}

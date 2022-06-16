@@ -24,6 +24,7 @@ export default function Words({ onBlur }) {
 
   const handleForward = (validWords) => {
     onBlur(
+      validWords.some((word) => word.length === 1),
       validWords.some((word) => word.invalid)
         ? 0
         : validWords.reduce((total, word) => total + word.total, 0),
