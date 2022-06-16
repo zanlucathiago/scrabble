@@ -6,11 +6,13 @@ import Column from './Column';
 import Letters from './Letters';
 
 export default function Word({ onBlur, onValidate }) {
+  const [word, setWord] = useState('');
   const [multiplier, setMultiplier] = useState(1);
   const [sum, setSum] = useState(0);
   const [letters, setLetters] = useState([]);
 
   const handleBlur = (word) => {
+    setWord(word);
     const letterList = [...word].map((letter) => {
       const score = get(letter);
       return {
@@ -26,9 +28,11 @@ export default function Word({ onBlur, onValidate }) {
     setLetters(letterList);
     const newSum =
       wordMultiplier *
-      letterList.reduce((total, letter) => total + letter.total, 0);
+      (letterList.length === 1
+        ? 0
+        : letterList.reduce((total, letter) => total + letter.total, 0));
     setSum(newSum);
-    onBlur(newSum);
+    onBlur(newSum, letterList.length);
   };
   const handleClick = (letterMultiplier, index) => {
     const letterList = letters.map((letter, i) =>
@@ -61,7 +65,7 @@ export default function Word({ onBlur, onValidate }) {
               justifyContent="space-around"
               style={{ height: '100%' }}
             >
-              <Letters handleClick={handleClick} letters={letters} />
+              <Letters key={word} handleClick={handleClick} letters={letters} />
             </Stack>
           </Grid>
           <ChallengeButton
@@ -73,4 +77,10 @@ export default function Word({ onBlur, onValidate }) {
       </CardContent>
     </Card>
   );
+
+  // function getSum(wordMultiplier, letterList) {
+  //   return wordMultiplier * letterList.length === 1
+  //     ? 0
+  //     : letterList.reduce((total, letter) => total + letter.total, 0);
+  // }
 }

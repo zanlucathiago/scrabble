@@ -1,8 +1,6 @@
 import { Button, Stack, TextField } from '@mui/material';
 import { useState } from 'react';
-// import { useState } from 'react';
 import WordInput from './WordInput';
-// import { get } from '../services/score';
 
 const multipliers = [
   {
@@ -31,18 +29,7 @@ export default function Column({ handleBlur, onClickMultiplier, sum }) {
     onClickMultiplier(multipliers[value].value);
   };
 
-  // const [wordScore, setWordScore] = useState(0);
-  // const handleClickScore = (event) => {
-  //   event.preventDefault();
-  //   event.stopPropagation();
-  // };
-
-  // const handleBlurWord = (word) => {
-  // const score = [...word].reduce((total, value) => total + get(value), 0);
-  // setWordScore(score);
-  // handleBlur(word);
-  // };
-  const { badgeContent, color, textColor } = multipliers[multiplier];
+  const { badgeContent, color } = multipliers[multiplier];
 
   return (
     <Stack
@@ -68,7 +55,6 @@ export default function Column({ handleBlur, onClickMultiplier, sum }) {
         </Button>
         <TextField
           color="success"
-          // onClick={handleClickScore}
           size="small"
           label="Pontos"
           value={sum}

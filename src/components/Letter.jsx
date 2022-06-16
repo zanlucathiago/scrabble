@@ -19,7 +19,7 @@ const multipliers = [
   },
 ];
 
-export default function Letter({ value, onClick, score }) {
+export default function Letter({ disabled, value, onClick, score }) {
   const [multiplier, setMultiplier] = useState(0);
 
   const handleClick = (e) => {
@@ -48,6 +48,7 @@ export default function Letter({ value, onClick, score }) {
         </div>
         <Button
           color={color}
+          disabled={disabled}
           onClick={handleClick}
           style={{ minWidth: '37px', width: '37px' }}
           variant="contained"
