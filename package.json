@@ -43,8 +43,8 @@
       "last 1 safari version"
     ]
   },
-  "engines" : { 
-    "npm" : ">=8.12.2",
-    "node" : ">=18.4.0"
+  "engines": {
+    "npm": ">=7.11.2",
+    "node": ">=16.1.0"
   }
 }
