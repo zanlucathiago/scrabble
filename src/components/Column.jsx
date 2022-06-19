@@ -38,10 +38,10 @@ export default function Column ({
 
   return (
     <Grid container spacing={2}>
-      <Grid item style={{ width: '100%' }}>
+      <Grid item style={{ width: '100%' }} sm={6}>
         <WordInput autoFocus={autoFocus} onBlur={handleBlur} />
       </Grid>
-      <Grid item style={{ width: '100%' }}>
+      <Grid item style={{ width: '100%' }} sm={6}>
         <Grid container spacing={2} justifyContent='space-between'>
           <Grid item xs={6} style={{ width: '100%' }}>
             <Stack

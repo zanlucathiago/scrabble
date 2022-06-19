@@ -52,7 +52,7 @@ export default function Word ({ autoFocus, onBlur }) {
     <Card style={{ backgroundColor: '#a5d6a7' }}>
       <CardContent>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} md={4} lg={3}>
+          <Grid item xs={12} sm={12} md={8} lg={6}>
             <Column
               autoFocus={autoFocus}
               handleBlur={handleBlur}
@@ -60,8 +60,9 @@ export default function Word ({ autoFocus, onBlur }) {
               sum={sum}
             />
           </Grid>
+          <Grid item md={4} lg={6} style={{ padding: 0 }} />
           {word && (
-            <Grid item xs={12} sm={6} md={8} lg={9}>
+            <Grid item xs={12} sm={12} md={12} lg={9}>
               <Stack
                 alignItems='stretch'
                 justifyContent='space-around'
