@@ -3,6 +3,10 @@ import { useState } from 'react';
 
 const multipliers = [
   {
+    value: 0,
+    color: 'inherit',
+  },
+  {
     value: 1,
     color: 'inherit',
   },
@@ -20,11 +24,11 @@ const multipliers = [
 ];
 
 export default function Letter({ disabled, value, onClick, score }) {
-  const [multiplier, setMultiplier] = useState(0);
+  const [multiplier, setMultiplier] = useState(1);
 
   const handleClick = (e) => {
     e.stopPropagation();
-    const value = multiplier === 2 ? 0 : multiplier + 1;
+    const value = multiplier === 3 ? 0 : multiplier + 1;
     setMultiplier(value);
     onClick(multipliers[value].value);
   };
@@ -32,8 +36,12 @@ export default function Letter({ disabled, value, onClick, score }) {
   const { badgeContent, color, textColor } = multipliers[multiplier];
 
   return (
-    <Grid item>
-      <Badge badgeContent={badgeContent} color="success">
+    <Grid item style={{ height: 52.5 }}>
+      <Badge
+        badgeContent={badgeContent}
+        color="success"
+        style={{ height: '100%' }}
+      >
         <div
           style={{
             position: 'absolute',
@@ -44,7 +52,7 @@ export default function Letter({ disabled, value, onClick, score }) {
             fontSize: '0.7rem',
           }}
         >
-          {score}
+          {multiplier ? score : ''}
         </div>
         <Button
           color={color}
@@ -53,7 +61,7 @@ export default function Letter({ disabled, value, onClick, score }) {
           style={{ minWidth: '37px', width: '37px' }}
           variant="contained"
         >
-          {value}
+          {multiplier ? value : ''}
         </Button>
       </Badge>
     </Grid>

@@ -1,17 +1,16 @@
 import { Card, CardContent, Grid, Stack } from '@mui/material';
 import { useState } from 'react';
 import { get } from '../services/score';
-import ChallengeButton from './ChallengeButton';
 import Column from './Column';
 import Letters from './Letters';
 
-export default function Word({ onBlur, onValidate }) {
+export default function Word({ autoFocus, onBlur }) {
   const [word, setWord] = useState('');
   const [multiplier, setMultiplier] = useState(1);
   const [sum, setSum] = useState(0);
   const [letters, setLetters] = useState([]);
 
-  const handleBlur = (word) => {
+  const handleBlur = (word, focus) => {
     setWord(word);
     const letterList = [...word].map((letter) => {
       const score = get(letter);
@@ -21,10 +20,10 @@ export default function Word({ onBlur, onValidate }) {
         total: score,
       };
     });
-    handleForward(letterList, multiplier);
+    handleForward(letterList, multiplier, focus, word);
   };
 
-  const handleForward = (letterList, wordMultiplier) => {
+  const handleForward = (letterList, wordMultiplier, focus, newWord) => {
     setLetters(letterList);
     const newSum =
       wordMultiplier *
@@ -32,20 +31,21 @@ export default function Word({ onBlur, onValidate }) {
         ? 0
         : letterList.reduce((total, letter) => total + letter.total, 0));
     setSum(newSum);
-    onBlur(newSum, letterList.length);
+    onBlur(focus, newWord, newSum, letterList.length);
   };
+
   const handleClick = (letterMultiplier, index) => {
     const letterList = letters.map((letter, i) =>
       i === index
         ? { ...letter, total: letter.score * letterMultiplier }
         : letter
     );
-    handleForward(letterList, multiplier);
+    handleForward(letterList, multiplier, false, word);
   };
 
   const handleClickMultiplier = (wordMultiplier) => {
     setMultiplier(wordMultiplier);
-    handleForward(letters, wordMultiplier);
+    handleForward(letters, wordMultiplier, false, word);
   };
 
   return (
@@ -54,6 +54,7 @@ export default function Word({ onBlur, onValidate }) {
         <Grid container spacing={2}>
           <Grid item>
             <Column
+              autoFocus={autoFocus}
               handleBlur={handleBlur}
               onClickMultiplier={handleClickMultiplier}
               sum={sum}
@@ -68,11 +69,6 @@ export default function Word({ onBlur, onValidate }) {
               <Letters key={word} handleClick={handleClick} letters={letters} />
             </Stack>
           </Grid>
-          <ChallengeButton
-            disabled={!sum}
-            letters={letters}
-            onValidate={onValidate}
-          ></ChallengeButton>
         </Grid>
       </CardContent>
     </Card>

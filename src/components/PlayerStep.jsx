@@ -20,27 +20,13 @@ const theme = createTheme({
   },
 });
 
-export default function PlayerStep({
-  active,
-  children,
-  score,
-  totalScore,
-  validated,
-}) {
+export default function PlayerStep({ children, score, totalScore, valid }) {
   return (
     <ThemeProvider theme={theme}>
       <StepLabel optional={<Typography variant="caption">{score}</Typography>}>
         <Badge
-          badgeContent={
-            active
-              ? totalScore
-                ? `+${totalScore}`
-                : null
-              : validated
-              ? `-${validated * 10}`
-              : null
-          }
-          color={active ? 'info' : 'error'}
+          badgeContent={valid ? (totalScore ? `+${totalScore}` : null) : null}
+          color="info"
         >
           {children}
         </Badge>

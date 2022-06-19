@@ -1,58 +1,65 @@
 import { v4 } from 'uuid';
-import { Stack } from '@mui/material';
+import { Alert, Stack } from '@mui/material';
 import { useState } from 'react';
 import Word from './Word';
 
-const buildWord = () => {
-  return { key: v4(), length: 0, total: 0, invalid: false, validated: false };
+const buildWord = (autoFocus) => {
+  return {
+    autoFocus,
+    key: v4(),
+    length: 0,
+    total: 0,
+    word: '',
+  };
 };
 
-export default function Words({ onBlur }) {
-  const [words, setWords] = useState([buildWord()]);
+const messages = {
+  info: ['Todas as palavras são válidas! O próximo jogador perderá a vez.'],
+  error: [
+    'Há palavras inválidas! Você perdeu a vez.',
+    'As palavras contestadas no turno anterior são válidas! Você perdeu a vez.',
+  ],
+  warning: ['Há palavras que precisam ser consultadas no dicionário!'],
+};
 
-  const handleBlur = (total, index, length) => {
+export default function Words({ alert, onBlur, message }) {
+  const [words, setWords] = useState([buildWord(true)]);
+
+  const handleBlur = (total, nextWord, index, focus, length) => {
     const validWords = words
       .map((word, i) => ({
         ...word,
-        ...(i === index ? { length, total } : {}),
+        ...(i === index ? { length, total, word: nextWord } : {}),
+        autoFocus: false,
       }))
       .filter((word) => word.length);
-    const newWord = buildWord();
+    const newWord = buildWord(focus);
     setWords([...validWords, newWord]);
     handleForward(validWords);
   };
 
   const handleForward = (validWords) => {
     onBlur(
+      validWords.map((word) => word.word),
       validWords.some((word) => word.length === 1),
-      validWords.some((word) => word.invalid)
-        ? 0
-        : validWords.reduce((total, word) => total + word.total, 0),
-      validWords.filter((word) => word.validated).length
+      validWords.reduce((total, word) => total + word.total, 0)
     );
-  };
-
-  const handleValidate = (status, index) => {
-    const validWords = words.map((word, i) => ({
-      ...word,
-      ...(i === index
-        ? {
-            validated: status === 'info',
-            invalid: status === 'error',
-          }
-        : {}),
-    }));
-    setWords(validWords);
-    handleForward(validWords);
   };
 
   return (
     <Stack spacing={2} sx={{ pt: 2, pb: 2 }}>
+      {alert && (
+        <Alert variant="filled" severity={alert}>
+          {messages[alert][message]}
+        </Alert>
+      )}
       {words.map((word, index) => (
         <Word
           key={word.key}
-          onBlur={(total, length) => handleBlur(total, index, length)}
-          onValidate={(status) => handleValidate(status, index)}
+          autoFocus={word.autoFocus}
+          onBlur={(focus, word, total, length) =>
+            handleBlur(total, word, index, focus, length)
+          }
         />
       ))}
     </Stack>

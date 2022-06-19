@@ -1,15 +1,7 @@
-import {
-  Box,
-  Button,
-  Container,
-  Paper,
-  Stack,
-  Step,
-  Stepper,
-  TextField,
-} from '@mui/material';
+import { Box, Button, Container, Paper, Stack, TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
-import PlayerStep from './PlayerStep';
+import ChallengeButton from './ChallengeButton';
+import PlayersStepper from './PlayersStepper';
 import Timer from './Timer';
 import Words from './Words';
 
@@ -27,8 +19,10 @@ const rawPlayers = [
 const randomize = (array) => (Math.random() < 0.5 ? array : array.reverse());
 
 export default function Panel() {
+  const [message, setMessage] = useState(0);
+  const [status, setStatus] = useState(null);
+  const [words, setWords] = useState([]);
   const [disableFinish, setDisableFinish] = useState(false);
-  const [validated, setValidated] = useState(0);
   const [players, setPlayers] = useState([]);
   const [totalScore, setTotalScore] = useState(0);
   const [currentPlayer, setCurrentPlayer] = useState(0);
@@ -39,23 +33,28 @@ export default function Panel() {
 
   const updateScores = (player, index) => ({
     ...player,
-    score:
-      index === currentPlayer
-        ? player.score + totalScore
-        : player.score - validated * 10,
+    ...(index === currentPlayer ? { score: player.score + totalScore } : {}),
   });
 
   const switchPlayer = () => {
-    setPlayers(players.map(updateScores));
+    if (status !== 'error') {
+      setPlayers(players.map(updateScores));
+    }
+    if (status === 'info') {
+      setStatus('error');
+      setMessage(1);
+    } else {
+      setMessage(0);
+      setStatus(null);
+    }
     setCurrentPlayer(1 - currentPlayer);
     setTotalScore(0);
-    setValidated(0);
   };
 
-  const handleBlur = (disableFinish, total, validated) => {
+  const handleBlur = (words, disableFinish, total) => {
+    setWords(words);
     setDisableFinish(disableFinish);
     setTotalScore(total);
-    setValidated(validated);
   };
 
   return (
@@ -70,32 +69,22 @@ export default function Panel() {
       >
         <Stack direction="row" sx={{ m: 2, ml: 0 }}>
           <Container size="xs">
-            <Stack
-              alignItems="stretch"
-              justifyContent="space-around"
-              style={{ height: '100%' }}
-            >
-              <Stepper activeStep={currentPlayer}>
-                {players.map(({ name, score }, index) => (
-                  <Step key={name} completed={false}>
-                    <PlayerStep
-                      key={name}
-                      active={index === currentPlayer}
-                      score={score}
-                      totalScore={totalScore}
-                      validated={validated}
-                    >
-                      {name}
-                    </PlayerStep>
-                  </Step>
-                ))}
-              </Stepper>
-            </Stack>
+            <PlayersStepper
+              currentPlayer={currentPlayer}
+              players={players}
+              status={status}
+              totalScore={totalScore}
+            />
           </Container>
           <Timer player={currentPlayer} />
         </Stack>
       </Paper>
-      <Words key={currentPlayer} onBlur={handleBlur} />
+      <Words
+        key={currentPlayer}
+        message={message}
+        onBlur={handleBlur}
+        alert={status}
+      />
       <Paper
         sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
         elevation={3}
@@ -109,19 +98,26 @@ export default function Panel() {
             }}
             size="small"
             label="Total"
-            value={totalScore}
+            value={status === 'error' ? 0 : totalScore}
             InputProps={{
               readOnly: true,
             }}
           />
-          <Button
-            disabled={disableFinish}
-            variant="contained"
-            onClick={switchPlayer}
-            color="success"
-          >
-            Terminar
-          </Button>
+          <Stack direction="row" spacing={2}>
+            <ChallengeButton
+              disabled={disableFinish}
+              words={words}
+              onValidate={setStatus}
+            ></ChallengeButton>
+            <Button
+              disabled={disableFinish}
+              variant="contained"
+              onClick={switchPlayer}
+              color="success"
+            >
+              Terminar
+            </Button>
+          </Stack>
         </Stack>
       </Paper>
     </Box>

@@ -20,7 +20,12 @@ const multipliers = [
   },
 ];
 
-export default function Column({ handleBlur, onClickMultiplier, sum }) {
+export default function Column({
+  autoFocus,
+  handleBlur,
+  onClickMultiplier,
+  sum,
+}) {
   const [multiplier, setMultiplier] = useState(0);
 
   const handleClickMultiplier = () => {
@@ -38,7 +43,7 @@ export default function Column({ handleBlur, onClickMultiplier, sum }) {
       justifyContent="space-around"
       style={{ height: '100%' }}
     >
-      <WordInput onBlur={handleBlur} />
+      <WordInput autoFocus={autoFocus} onBlur={handleBlur} />
       <Stack
         direction="row"
         justifyContent="space-between"
