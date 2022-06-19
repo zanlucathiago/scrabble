@@ -1,6 +1,7 @@
-import { Button, Container, Grid, Paper, TextField } from '@mui/material'
+import { Container, Grid, Paper } from '@mui/material'
+import { Box } from '@mui/system'
 import { useEffect, useState } from 'react'
-import ChallengeButton from './ChallengeButton'
+import FooterButtons from './FooterButtons'
 import PlayersStepper from './PlayersStepper'
 import Timer from './Timer'
 import TotalField from './TotalField'
@@ -61,7 +62,7 @@ export default function Panel () {
   return (
     <>
       <Paper
-        sx={{ right: 0, p: 2 }}
+        sx={{ position: 'fixed', top: 0, left: 0, right: 0, p: 2 }}
         elevation={3}
         style={{ backgroundColor: '#81c784', zIndex: 2 }}
       >
@@ -80,6 +81,26 @@ export default function Panel () {
         </Grid>
       </Paper>
       <Container>
+        <Box sx={{ p: 2 }}>
+          <Grid container spacing={2}>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={8}
+              lg={9}
+              style={{ height: '58.2px' }}
+            />
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              lg={3}
+              style={{ height: '56px' }}
+            />
+          </Grid>
+        </Box>
         <Words
           key={currentPlayer}
           message={message}
@@ -94,28 +115,12 @@ export default function Panel () {
           <Grid container spacing={2}>
             <TotalField value={status === 'error' ? 0 : totalScore} />
             <Grid item xs={0} sm={0} md={4} lg={6} style={{ padding: 0 }} />
-            <Grid item xs={12} sm={6} md={4} lg={3}>
-              <Grid container spacing={2}>
-                <Grid item xs={6} style={{ width: '100%' }}>
-                  <ChallengeButton
-                    disabled={disableFinish}
-                    words={words}
-                    onValidate={setStatus}
-                  ></ChallengeButton>
-                </Grid>
-                <Grid item xs={6} style={{ width: '100%' }}>
-                  <Button
-                    disabled={disableFinish}
-                    style={{ width: '100%' }}
-                    variant='contained'
-                    onClick={switchPlayer}
-                    color='success'
-                  >
-                    Terminar
-                  </Button>
-                </Grid>
-              </Grid>
-            </Grid>
+            <FooterButtons
+              disabled={disableFinish}
+              onClick={switchPlayer}
+              onValidate={setStatus}
+              words={words}
+            />
           </Grid>
         </Paper>
       </Container>
