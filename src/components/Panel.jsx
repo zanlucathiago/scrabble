@@ -116,6 +116,7 @@ export default function Panel () {
             <TotalField value={status === 'error' ? 0 : totalScore} />
             <Grid item xs={0} sm={0} md={4} lg={6} style={{ padding: 0 }} />
             <FooterButtons
+              turnSkipped={message}
               disabled={disableFinish}
               onClick={switchPlayer}
               onValidate={setStatus}

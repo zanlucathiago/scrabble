@@ -1,13 +1,19 @@
-import { Button, Grid } from "@mui/material";
-import ChallengeButton from "./ChallengeButton";
+import { Button, Grid } from '@mui/material'
+import ChallengeButton from './ChallengeButton'
 
-export default function FooterButtons ({ disabled, onClick, onValidate, words }) {
+export default function FooterButtons ({
+  disabled,
+  onClick,
+  onValidate,
+  words,
+  turnSkipped
+}) {
   return (
     <Grid item xs={12} sm={6} md={4} lg={3}>
       <Grid container spacing={2}>
         <Grid item xs={6} style={{ width: '100%' }}>
           <ChallengeButton
-            disabled={disabled}
+            disabled={turnSkipped || disabled}
             words={words}
             onValidate={onValidate}
           ></ChallengeButton>
