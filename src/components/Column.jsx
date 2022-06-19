@@ -41,7 +41,7 @@ export default function Column ({
       <Grid item style={{ width: '100%' }}>
         <WordInput autoFocus={autoFocus} onBlur={handleBlur} />
       </Grid>
-      <Grid item>
+      <Grid item style={{ width: '100%' }}>
         <Grid container spacing={2} justifyContent='space-between'>
           <Grid item xs={6} style={{ width: '100%' }}>
             <Stack
