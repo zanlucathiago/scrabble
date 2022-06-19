@@ -4,7 +4,7 @@ export default function TotalField ({ value }) {
   return (
     <Grid item xs={12} sm={6} md={4} lg={3}>
       <Grid container spacing={2}>
-        <Grid item xs={6} style={{ width: '100%' }}>
+        <Grid item style={{ width: '100%' }}>
           <TextField
             color='success'
             inputProps={{
