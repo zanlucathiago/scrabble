@@ -67,7 +67,7 @@ export default function Panel () {
         style={{ backgroundColor: '#81c784', zIndex: 2 }}
       >
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} md={8} lg={9}>
+          <Grid item xs={12} sm={6} md={4} lg={3}>
             <PlayersStepper
               currentPlayer={currentPlayer}
               players={players}
@@ -75,6 +75,7 @@ export default function Panel () {
               totalScore={totalScore}
             />
           </Grid>
+          <Grid item xs={0} sm={0} md={4} lg={6} style={{ padding: 0 }} />
           <Grid item xs={12} sm={6} md={4} lg={3}>
             <Timer player={currentPlayer} />
           </Grid>
