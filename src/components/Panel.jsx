@@ -60,7 +60,7 @@ export default function Panel () {
   }
 
   return (
-    <>
+    <Container>
       <Paper
         sx={{ position: 'fixed', top: 0, left: 0, right: 0, p: 2 }}
         elevation={3}
@@ -80,51 +80,42 @@ export default function Panel () {
           </Grid>
         </Grid>
       </Paper>
-      <Container>
-        <Box sx={{ p: 2 }}>
-          <Grid container spacing={2}>
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={8}
-              lg={9}
-              style={{ height: '58.2px' }}
-            />
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              lg={3}
-              style={{ height: '56px' }}
-            />
-          </Grid>
-        </Box>
-        <Words
-          key={currentPlayer}
-          message={message}
-          onBlur={handleBlur}
-          alert={status}
-        />
-        <Paper
-          sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, p: 2 }}
-          elevation={3}
-          style={{ backgroundColor: '#81c784', zIndex: 1 }}
-        >
-          <Grid container spacing={2}>
-            <TotalField value={status === 'error' ? 0 : totalScore} />
-            <Grid item xs={0} sm={0} md={4} lg={6} style={{ padding: 0 }} />
-            <FooterButtons
-              turnSkipped={message}
-              disabled={disableFinish}
-              onClick={switchPlayer}
-              onValidate={setStatus}
-              words={words}
-            />
-          </Grid>
-        </Paper>
-      </Container>
-    </>
+      <Box sx={{ p: 2 }}>
+        <Grid container spacing={2}>
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={8}
+            lg={9}
+            style={{ height: '58.2px' }}
+          />
+          <Grid item xs={12} sm={6} md={4} lg={3} style={{ height: '56px' }} />
+        </Grid>
+      </Box>
+      <Words
+        key={currentPlayer}
+        message={message}
+        onBlur={handleBlur}
+        alert={status}
+      />
+      <Paper
+        sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, p: 2 }}
+        elevation={3}
+        style={{ backgroundColor: '#81c784', zIndex: 1 }}
+      >
+        <Grid container spacing={2}>
+          <TotalField value={status === 'error' ? 0 : totalScore} />
+          <Grid item xs={0} sm={0} md={4} lg={6} style={{ padding: 0 }} />
+          <FooterButtons
+            turnSkipped={message}
+            disabled={disableFinish}
+            onClick={switchPlayer}
+            onValidate={setStatus}
+            words={words}
+          />
+        </Grid>
+      </Paper>
+    </Container>
   )
 }

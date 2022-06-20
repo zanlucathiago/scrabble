@@ -1,16 +1,16 @@
-import { Stack, Step, Stepper } from '@mui/material';
-import PlayerStep from './PlayerStep';
+import { Stack, Step, Stepper } from '@mui/material'
+import PlayerStep from './PlayerStep'
 
-export default function PlayersStepper({
+export default function PlayersStepper ({
   currentPlayer,
   players,
   status,
-  totalScore,
+  totalScore
 }) {
   return (
     <Stack
-      alignItems="stretch"
-      justifyContent="space-around"
+      alignItems='stretch'
+      justifyContent='space-around'
       style={{ height: '100%' }}
     >
       <Stepper activeStep={currentPlayer}>
@@ -28,5 +28,5 @@ export default function PlayersStepper({
         ))}
       </Stepper>
     </Stack>
-  );
+  )
 }
